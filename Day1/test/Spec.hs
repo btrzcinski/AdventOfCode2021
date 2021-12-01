@@ -20,6 +20,19 @@ unitTests = testGroup "Unit tests"
             269,
             260,
             263] @?= 7
+
+    , testCase "Day1-2 example" $
+        numIncreasingTripletSums [
+            199,
+            200,
+            208,
+            210,
+            200,
+            207,
+            240,
+            269,
+            260,
+            263] @?= 5
     
     , testCase "pairs" $
         pairs [1, 2, 3, 4, 5] @?= [
@@ -27,6 +40,13 @@ unitTests = testGroup "Unit tests"
             (2, 3),
             (3, 4),
             (4, 5)
+        ]
+
+    , testCase "triplets" $
+        triplets [1, 2, 3, 4, 5] @?= [
+            (1, 2, 3),
+            (2, 3, 4),
+            (3, 4, 5)
         ]
 
     , testCase "increases (1,2)" $
