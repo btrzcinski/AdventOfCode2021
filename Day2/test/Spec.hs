@@ -39,4 +39,9 @@ unitTests = testGroup "Unit tests"
         ]) @?= (15, 10)
     , testCase "Day2-1 score" $
         (uncurry (*)) (15, 10) @?= 150
+    , testCase "Day2-2" $
+        finalAimPosition [(Forward 5), (Down 5), (Forward 8), (Up 3), (Down 8), (Forward 2)]
+        @?= (15, 60)
+    , testCase "Day2-2 score" $
+        (uncurry (*)) (15, 60) @?= 900
     ]

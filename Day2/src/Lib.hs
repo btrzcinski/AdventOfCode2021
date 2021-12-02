@@ -4,7 +4,10 @@ module Lib
         units,
         parseLineToCommand,
         delta,
-        finalPosition
+        finalPosition,
+        deltaAim,
+        aimwiseApply,
+        finalAimPosition
     ) where
 
 import Data.List.Extra
@@ -33,5 +36,19 @@ delta (Up x) = (0, -x)
 pairAdd :: (Int, Int) -> (Int, Int) -> (Int, Int)
 pairAdd (a, b) (c, d) = (a + c, b + d)
 
+deltaAim :: Command -> (Int, Int, Int)  -- (horiz pos, depth multiplier, aim)
+deltaAim (Forward x) = (x, x, 0)
+deltaAim (Up x) = (0, 0, -x)
+deltaAim (Down x) = (0, 0, x)
+
+aimwiseApply :: (Int, Int, Int) -> (Int, Int, Int) -> (Int, Int, Int)
+aimwiseApply (a, b, c) (d, e, f) = (a + d, b + (c * e), c + f)
+
 finalPosition :: [Command] -> (Int, Int)
-finalPosition commands = foldr1 pairAdd $ map delta commands
+finalPosition commands = foldl1 pairAdd $ map delta commands
+
+positionOnly :: (Int, Int, Int) -> (Int, Int)
+positionOnly (x, y, _) = (x, y)
+
+finalAimPosition :: [Command] -> (Int, Int)
+finalAimPosition commands = positionOnly $ foldl aimwiseApply (0,0,0) $ map deltaAim commands
