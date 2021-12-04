@@ -1,13 +1,14 @@
 module Main where
 
-import Lib (epsilonRate, gammaRate)
+import Lib (co2ScrubberRating, epsilonRate, gammaRate, lifeSupportRating, oxygenGeneratorRating, powerConsumption)
 
 main :: IO ()
 main = do
   input <- readFile "input.txt"
   let binaryStrings = lines input
-  let g = gammaRate binaryStrings
-  let e = epsilonRate binaryStrings
-  putStrLn $ "Gamma rate: " ++ show g
-  putStrLn $ "Epsilon rate: " ++ show e
-  putStrLn $ "g * e = " ++ show (g * e)
+  putStrLn $ "Gamma rate: " ++ show (gammaRate binaryStrings)
+  putStrLn $ "Epsilon rate: " ++ show (epsilonRate binaryStrings)
+  putStrLn $ "Power consumption: " ++ show (powerConsumption binaryStrings)
+  putStrLn $ "Oxygen generator rating: " ++ show (oxygenGeneratorRating binaryStrings)
+  putStrLn $ "CO2 scrubber rating: " ++ show (co2ScrubberRating binaryStrings)
+  putStrLn $ "Life support rating: " ++ show (lifeSupportRating binaryStrings)

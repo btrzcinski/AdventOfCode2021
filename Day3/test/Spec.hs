@@ -1,12 +1,12 @@
-import Lib (booleans, epsilonRate, gammaRate)
+import Lib (booleans, co2ScrubberRating, epsilonRate, gammaRate, lifeSupportRating, oxygenGeneratorRating, powerConsumption)
 import Test.Tasty
 import Test.Tasty.HUnit
 
 main :: IO ()
 main = defaultMain unitTests
 
-day1Part1Sample :: [String]
-day1Part1Sample =
+day1Sample :: [String]
+day1Sample =
   [ "00100",
     "11110",
     "10110",
@@ -28,7 +28,19 @@ unitTests =
     [ testCase "booleans" $
         booleans "10110" @?= [True, False, True, True, False],
       testCase "gammaRate for Day1-1 sample" $
-        gammaRate day1Part1Sample @?= 22,
+        gammaRate day1Sample
+          @?= 22,
       testCase "epsilonRate for Day1-1 sample" $
-        epsilonRate day1Part1Sample @?= 9
+        epsilonRate day1Sample
+          @?= 9,
+      testCase "powerConsumption for Day1-1 sample" $
+        powerConsumption day1Sample
+          @?= 198,
+      testCase "oxygenGeneratorRating for Day1-2 sample" $
+        oxygenGeneratorRating day1Sample
+          @?= 23,
+      testCase "co2ScrubberRating for Day1-2 sample" $
+        co2ScrubberRating day1Sample @?= 10,
+      testCase "lifeSupportRating for Day1-2 sample" $
+        lifeSupportRating day1Sample @?= 230
     ]
