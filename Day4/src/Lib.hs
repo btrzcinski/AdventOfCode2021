@@ -4,7 +4,9 @@ module Lib
     parseBoards,
     score,
     isWinningBoard,
-    firstWinningCondition
+    firstWinningCondition,
+    lastWinningCondition,
+    lastWinningScore
     ) where
 
 import Data.List (inits)
@@ -18,14 +20,30 @@ import Data.Bifunctor (Bifunctor(first))
 boardSize :: Int
 boardSize = 5
 
+lastWinningScore :: String -> Int
+lastWinningScore = winningScore lastWinningCondition
+
 firstWinningScore :: String -> Int
-firstWinningScore input =
+firstWinningScore = winningScore firstWinningCondition
+
+winningScore :: ([Matrix Int] -> [Int] -> (Matrix Int, [Int])) -> String -> Int
+winningScore conditionFunc input =
     let (rawDrawSeq:rawBoards) = lines input
         drawSeq = drawSequence rawDrawSeq
         boards = parseBoards rawBoards
-        (winningBoard, winningSequence) = firstWinningCondition boards drawSeq
+        (winningBoard, winningSequence) = conditionFunc boards drawSeq
     in score winningBoard winningSequence
 
+lastWinningCondition :: [Matrix Int] -> [Int] -> (Matrix Int, [Int])
+lastWinningCondition boards drawList =
+    let drawSequences = tail $ inits drawList
+        checkSequence' = flip isWinningBoard
+        outcomes = map (\seq -> filter (checkSequence' seq) boards) drawSequences
+        reversedConditions = reverse $ zip outcomes drawSequences
+        maxWinningBoards = length $ fst $ head reversedConditions
+        (lastConditions, otherConditions) = span (\x -> length (fst x) == maxWinningBoards) reversedConditions
+        ineligibleBoards = fst $ head otherConditions
+    in first (head . filter (`notElem` ineligibleBoards)) $ last lastConditions
 
 firstWinningCondition :: [Matrix Int] -> [Int] -> (Matrix Int, [Int])
 firstWinningCondition boards drawList =
