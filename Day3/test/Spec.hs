@@ -5,8 +5,8 @@ import Test.Tasty.HUnit
 main :: IO ()
 main = defaultMain unitTests
 
-day1Sample :: [String]
-day1Sample =
+sampleData :: [String]
+sampleData =
   [ "00100",
     "11110",
     "10110",
@@ -28,19 +28,25 @@ unitTests =
     [ testCase "booleans" $
         booleans "10110" @?= [True, False, True, True, False],
       testCase "gammaRate for Day1-1 sample" $
-        gammaRate day1Sample
+        gammaRate sampleData
+      
           @?= 22,
       testCase "epsilonRate for Day1-1 sample" $
-        epsilonRate day1Sample
+        epsilonRate sampleData
+      
           @?= 9,
       testCase "powerConsumption for Day1-1 sample" $
-        powerConsumption day1Sample
+        powerConsumption sampleData
+      
           @?= 198,
       testCase "oxygenGeneratorRating for Day1-2 sample" $
-        oxygenGeneratorRating day1Sample
+        oxygenGeneratorRating sampleData
+      
           @?= 23,
       testCase "co2ScrubberRating for Day1-2 sample" $
-        co2ScrubberRating day1Sample @?= 10,
+        co2ScrubberRating sampleData
+       @?= 10,
       testCase "lifeSupportRating for Day1-2 sample" $
-        lifeSupportRating day1Sample @?= 230
+        lifeSupportRating sampleData
+       @?= 230
     ]
