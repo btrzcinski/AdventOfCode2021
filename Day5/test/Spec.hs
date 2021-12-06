@@ -24,8 +24,8 @@ testData = [
 unitTests :: TestTree
 unitTests = testGroup
     "Unit tests" [
-        testCase "numOverlappingPoints (Part 1 sample)" $
-            numOverlappingPoints testData @?= 5,
+        testCase "numOverlappingPoints (Part 2 sample)" $
+            numOverlappingPoints testData @?= 12,
         testCase "parseLineSegment for horizontal segments" $
             parseLineSegment "0,9 -> 5,9" @?= [(0,9),(1,9),(2,9),(3,9),(4,9),(5,9)],
         testCase "parseLineSegment for vertical segments" $
@@ -34,15 +34,12 @@ unitTests = testGroup
             parseLineSegment "5,9 -> 0,9" @?= [(0,9),(1,9),(2,9),(3,9),(4,9),(5,9)],
         testCase "parseLineSegment for backwards vertical segments" $
             parseLineSegment "7,4 -> 7,0" @?= [(7,0),(7,1),(7,2),(7,3),(7,4)],
-        testCase "parseLineSegment ignores diagonals" $
-            parseLineSegment "0,0 -> 8,8" @?= [],
-        testCase "ventPointSet" $
-            ventPointSet testData @?= MS.fromList [
-                (2,1), (2,2),
-                (7,0), (7,1), (7,2), (7,3), (7,4),
-                (1,4), (2,4), (3,4), 
-                (3,4), (4,4), (5,4), (6,4), (7,4), (8,4), (9,4),
-                (0,9), (1,9), (2,9),
-                (0,9), (1,9), (2,9), (3,9), (4,9), (5,9)
-            ]
+        testCase "parseLineSegment for LL -> UR diagonals" $
+            parseLineSegment "7,9 -> 9,7" @?= [(7,9),(8,8),(9,7)],
+        testCase "parseLineSegment for UR -> LL diagonals" $
+            parseLineSegment "9,7 -> 7,9" @?= [(7,9),(8,8),(9,7)],
+        testCase "parseLineSegment for LR -> UL diagonals" $
+            parseLineSegment "9,9 -> 7,7" @?= [(7,7),(8,8),(9,9)],
+        testCase "parseLineSegment for UL -> LR diagonals" $
+            parseLineSegment "7,7 -> 9,9" @?= [(7,7),(8,8),(9,9)]
     ]
