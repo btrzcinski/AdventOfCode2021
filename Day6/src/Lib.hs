@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances #-}
 module Lib
     ( numFishAfter
     ) where
@@ -5,13 +6,16 @@ module Lib
 import Data.MultiSet (MultiSet)
 import qualified Data.MultiSet as MS
 
-numFishAfter :: [Int] -> Int -> Int
-numFishAfter s = numFishAfterInSet (MS.fromList s)
+class School s where
+    numFishAfter :: s -> Int -> Int
 
-numFishAfterInSet :: MultiSet Int -> Int -> Int 
-numFishAfterInSet s 0 = MS.foldOccur (\_ o b -> o + b) 0 s
-numFishAfterInSet s d =
-    numFishAfterInSet (MS.concatMap nextFishCycle s) (d - 1)
+instance School [Int] where
+    numFishAfter s = numFishAfter (MS.fromList s)
+
+instance School (MultiSet Int) where
+    numFishAfter s 0 = MS.foldOccur (\_ o b -> o + b) 0 s
+    numFishAfter s d =
+        numFishAfter (MS.concatMap nextFishCycle s) (d - 1)
 
 nextFishCycle :: Int -> [Int]
 nextFishCycle c
