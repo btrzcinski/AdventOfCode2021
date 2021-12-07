@@ -12,5 +12,7 @@ unitTests :: TestTree
 unitTests = testGroup
     "Unit tests" [
         testCase "minStraightLineFuelForAlignment (part 1 example)" $
-            minStraightLineFuelForAlignment testData @?= 37
+            minStraightLineFuelForAlignment testData @?= 37,
+        testCase "minArithmeticSumFuelForAlignment (part 2 example)" $
+            minArithmeticSumFuelForAlignment testData @?= 168
     ]

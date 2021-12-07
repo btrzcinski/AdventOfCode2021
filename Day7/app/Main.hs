@@ -9,3 +9,4 @@ main = do
     input <- readFile "input.txt"
     let startingAlignments = map read $ splitOn "," input
     putStrLn $ "minStraightLineFuelForAlignment: " ++ show (minStraightLineFuelForAlignment startingAlignments)
+    putStrLn $ "minArithmeticSumFuelForAlignment: " ++ show (minArithmeticSumFuelForAlignment startingAlignments)
