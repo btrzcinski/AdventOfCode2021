@@ -3,18 +3,23 @@ module Lib
     minArithmeticSumFuelForAlignment
     ) where
 
-minStraightLineFuelForAlignment :: [Int] -> Int
-minStraightLineFuelForAlignment s =
-    let possiblePositions = [(minimum s)..(maximum s)]
-        movementCosts = map (\p -> map (abs . (p -)) s) possiblePositions
-    in minimum (map sum movementCosts)
+
+straightLine :: Int -> Int 
+straightLine = id
 
 arithmeticSum :: Int -> Int 
 arithmeticSum 0 = 0
 arithmeticSum u = (u * (1 + u)) `div` 2
 
-minArithmeticSumFuelForAlignment :: [Int] -> Int
-minArithmeticSumFuelForAlignment s =
+minFuelForAlignment :: (Int -> Int) -> [Int] -> Int
+minFuelForAlignment costFn s =
     let possiblePositions = [(minimum s)..(maximum s)]
-        movementCosts = map (\p -> map (arithmeticSum . abs . (p -)) s) possiblePositions
+        movementCosts = map (\p -> map (costFn . abs . (p -)) s) possiblePositions
     in minimum (map sum movementCosts)
+
+minStraightLineFuelForAlignment :: [Int] -> Int
+minStraightLineFuelForAlignment = minFuelForAlignment straightLine
+
+minArithmeticSumFuelForAlignment :: [Int] -> Int 
+minArithmeticSumFuelForAlignment = minFuelForAlignment arithmeticSum
+
