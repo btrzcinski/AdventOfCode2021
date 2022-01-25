@@ -3,7 +3,6 @@ module Lib
   )
 where
 
-import Data.Matrix (Matrix)
 import qualified Data.Matrix as M (fromLists, mapPos, safeGet, toList)
 import Data.Maybe (mapMaybe)
 import Data.Char (digitToInt)
